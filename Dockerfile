@@ -7,10 +7,8 @@ RUN go mod download
 ADD . ./
 RUN go install
 
-FROM alpine:3.14
+FROM scratch
 MAINTAINER Jason Wilder <mail@jasonwilder.com>
-
-COPY --from=binary /go/bin/dockerize /usr/local/bin
-
-ENTRYPOINT ["dockerize"]
+ENTRYPOINT ["/dockerize"]
 CMD ["--help"]
+COPY --from=binary /go/bin/dockerize /dockerize
