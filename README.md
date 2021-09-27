@@ -224,6 +224,21 @@ i = {{ $i }}
 {{ end }}
 ```
 
+## Release a new version
+
+Use the following command to publish a new version of Dockerize that supports both amd64 and arm64 architectures:
+```
+docker buildx build -t <your-organization>/dockerize:v0.6.1-amd64 . --platform linux/amd64 --output \"name=<your-organization>/dockerize:v0.6.1-amd64\",\"push=true\",\"type=image\"
+docker buildx build -t <your-organization>/dockerize:v0.6.1-arm64 . --platform linux/arm64 --output \"name=<your-organization>/dockerize:v0.6.1-arm64\",\"push=true\",\"type=image\"
+
+docker manifest create \
+  <your-organization>/dockerize:v0.6.1 \
+  --amend <your-organization>/dockerize:v0.6.1-amd64 \
+  --amend <your-organization>/dockerize:v0.6.1-arm64
+
+docker manifest push <your-organization>/dockerize:v0.6.1
+```
+
 ## License
 
 MIT
