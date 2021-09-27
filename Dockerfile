@@ -1,6 +1,7 @@
 FROM golang:1.13.7-alpine3.11 AS binary
 RUN apk -U add openssl git
 WORKDIR /build
+ENV CGO_ENABLED 0
 ADD ./go.* ./
 RUN go mod download
 ADD . ./
